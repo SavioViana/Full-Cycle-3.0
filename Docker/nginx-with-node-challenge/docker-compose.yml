@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  node-app:
+    build: 
+      context: node
+    container_name: node-app
+    image: savioviana/node-app
+    entrypoint: dockerize -wait tcp://database:3306 -timeout 20s docker-entrypoint.sh node index.js
+    restart: always
+    networks:
+      - my-node-networks
+    volumes:
+      - ./node:/app
+      - /app/node_modules
+    tty: true
+    depends_on:
+      - database
+  
+  nginx:
+    build: 
+      context: nginx
+    container_name: nginx
+    image: savioviana/nginx
+    networks:
+      - my-node-networks
+    ports:
+      - "8080:80"
+  
+  database:
+    build: 
+      context: mysql
+    image: savioviana/mysql
+    container_name: mysql-db
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    tty: true
+    volumes: 
+      - ./mysql/db:/var/lib/mysql
+    networks:
+      - my-node-networks
+    environment:
+      - MYSQL_DATABASE=nodedb
+      - MYSQL_ROOT_PASSWORD=root
+networks:
+  my-node-networks:
+    driver: bridge
