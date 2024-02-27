@@ -26,6 +26,8 @@ services:
       - my-node-networks
     ports:
       - "8080:80"
+    depends_on:
+      - node-app
   
   database:
     build: 
