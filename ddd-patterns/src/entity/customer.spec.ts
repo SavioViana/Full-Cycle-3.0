@@ -45,6 +45,18 @@ describe("Customer unit tests", () => {
         expect(customer.isActive()).toBe(false)
     })
 
+    it('should add rewardPoints', () => {
+
+        const customer = new Customer("1", "Customer 1")
+        expect(customer.rewardPoints).toBe(0)
+
+        customer.addRewardPoints(10)
+        expect(customer.rewardPoints).toBe(10)
+
+        customer.addRewardPoints(10)
+        expect(customer.rewardPoints).toBe(20)
+    })
+
     it('should thown error when address is undefinded', () => {
         
         expect(() => {
