@@ -1,3 +1,9 @@
 /Docker/nginx-with-node-challenge/mysql/db
 
 /Docker/nginx-with-node-challenge/node/node_modules
+
+
+/ddd-patterns/node_modules
+/ddd-patterns/.vscode
+/ddd-patterns/.swc
+/ddd-patterns/dist
