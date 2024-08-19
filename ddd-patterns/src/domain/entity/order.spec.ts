@@ -46,4 +46,24 @@ describe("Order unit tests", () => {
         }).toThrow("Quantity must be greater than 0")
     })
 
+    it('should add item', () => {
+
+        const item1 = new OrderItem("i1", "Item 1", 100, "p1", 2)
+
+        const order = new Order("o1", "123", [item1])
+
+        expect(order.items.length).toBe(1)
+
+        const newItem = new OrderItem("i2", "Item 2", 100, "p2", 1)
+
+        order.addItems([newItem])
+
+        expect(order.items.length).toBe(2)
+
+        const total = order.total()
+
+        expect(total).toBe(300)
+    })
+
+
 })
