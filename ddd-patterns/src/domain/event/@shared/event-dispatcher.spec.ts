@@ -1,3 +1,7 @@
+import CustomerChangedAddressEvent from "../customer/customer-changed-address.event";
+import CustomerCreatedEvent from "../customer/customer.created.event";
+import CustomerChangedAddressHandler from "../customer/handler/customer-changed-address.handler";
+import { EnviaConsolerLog1Handler, EnviaConsolerLog2Handler } from "../customer/handler/customer-created.handler";
 import SendEmailWhenProductIsCreatedHandler from "../product/handler/send-email.when-product-is-created.handler";
 import ProductCreatedEvent from "../product/product-created.event";
 import EventDispatcher from "./event-dispatcher";
@@ -71,4 +75,56 @@ describe("Domain events tests", () => {
         expect(spyEventHandler).toHaveBeenCalled()
 
     })
+
+    
+    it("Should Notify EnviaConsolerLogHandlers ", () => {
+        
+        const eventDispatcher = new EventDispatcher()
+        const eventHandler1 = new EnviaConsolerLog1Handler()
+        const eventHandler2 = new EnviaConsolerLog2Handler()
+
+        const spyEventHandler1= jest.spyOn(eventHandler1, "handle")
+        const spyEventHandler2= jest.spyOn(eventHandler2, "handle")
+
+        eventDispatcher.register("CustomerCreatedEvent", eventHandler1)
+        eventDispatcher.register("CustomerCreatedEvent", eventHandler2)
+
+
+        expect(eventDispatcher.getEventHandlers["CustomerCreatedEvent"]).toBeDefined()
+        expect(eventDispatcher.getEventHandlers["CustomerCreatedEvent"].length).toBe(2)
+
+        const customerCreatedEvent = new CustomerCreatedEvent({
+            name: "Customer Name",
+        })
+
+        eventDispatcher.notify( customerCreatedEvent )
+
+        expect(spyEventHandler1).toHaveBeenCalled()
+        expect(spyEventHandler2).toHaveBeenCalled()
+    })
+
+    it("Should Notify ChangedAddressHandler ", () => {
+        
+        const eventDispatcher = new EventDispatcher()
+        const eventHandler = new CustomerChangedAddressHandler
+
+        const spyEventHandler = jest.spyOn(eventHandler, "handle")
+
+        eventDispatcher.register("CustomerChangedAddressEvent", eventHandler)
+
+
+        expect(eventDispatcher.getEventHandlers["CustomerChangedAddressEvent"]).toBeDefined()
+
+        const customerCreatedEvent = new CustomerChangedAddressEvent({
+            id: '"123',
+            name: "Customer Name",
+            address: 'Rua B, 5 - São paulo, 33325-000, SP'
+        })
+
+        eventDispatcher.notify( customerCreatedEvent )
+
+        expect(spyEventHandler).toHaveBeenCalled()
+    })
+    
+  
 })
