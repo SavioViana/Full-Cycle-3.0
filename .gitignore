@@ -8,3 +8,6 @@
 /ddd-patterns/.swc
 /ddd-patterns/dist
 /ddd-patterns/:memory
+
+
+/arquitetira-hexagonal/db.sqlite

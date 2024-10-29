@@ -3,7 +3,7 @@ package application_test
 import (
 	"github.com/SavioViana/go-hexagonal/application"
 	mock_application "github.com/SavioViana/go-hexagonal/application/mocks"
-	"github.com/golang/mock/gomock"
+	"go.uber.org/mock/gomock"
 	"github.com/stretchr/testify/require"
 	"testing"
 )
