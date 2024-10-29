@@ -3,11 +3,9 @@ FROM golang:1.23
 WORKDIR /go/src
 ENV PATH="/go/bin:${PATH}"
 
-RUN go install go.uber.org/mock/mockgen@latest
-
-#RUN go get -u github.com/spf13/cobra@latest && \
-#    go install go.uber.org/mock/mockgen@latest && \
-#    go install github.com/spf13/cobra-cli@latest
+RUN go get -u github.com/spf13/cobra@latest && \
+    go install go.uber.org/mock/mockgen@latest && \
+    go install github.com/spf13/cobra-cli@latest
 
 RUN apt-get update && apt-get install sqlite3 -y
 

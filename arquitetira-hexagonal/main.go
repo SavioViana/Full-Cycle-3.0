@@ -1,20 +1,11 @@
+/*
+Copyright © 2024 NAME HERE <EMAIL ADDRESS>
+
+*/
 package main
 
-import (
-	"database/sql"
-	db2 "github.com/SavioViana/go-hexagonal/adapters/db"
-	_ "github.com/mattn/go-sqlite3"
-	"github.com/SavioViana/go-hexagonal/application"
-)
+import "github.com/SavioViana/go-hexagonal/cmd"
 
-var Db *sql.DB
-
-func main()  {
-	db, _ := sql.Open("sqlite3", "db.sqlite")
-	productDbAdapter := db2.NewProductDb(db)
-	productService := application.NewProductService(productDbAdapter)
-
-	product, _ := productService.Create("Product Example", 30)
-	
-	productService.Enable(product)
+func main() {
+	cmd.Execute()
 }
