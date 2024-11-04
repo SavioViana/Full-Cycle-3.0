@@ -4,12 +4,26 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 */
 package cmd
 
+
+
 import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"database/sql"
+//	"fmt"
+	"github.com/SavioViana/go-hexagonal/application"
+	dbInfra "github.com/SavioViana/go-hexagonal/adapters/db"
+
+//	homedir "github.com/mitchellh/go-homedir"
+//	"github.com/spf13/viper
 )
 
+var cfgFile string
+
+var db, _ = sql.Open("sqlite3","db.sqlite")
+var productDb = dbInfra.NewProductDb(db)
+var productService = application.ProductService{Persistence: productDb}
 
 
 // rootCmd represents the base command when called without any subcommands
