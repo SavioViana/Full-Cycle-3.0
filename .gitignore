@@ -9,5 +9,8 @@
 /ddd-patterns/dist
 /ddd-patterns/:memory
 
+/ddd-patterns/node_modules
 
 /arquitetira-hexagonal/db.sqlite
+
+/node_modules

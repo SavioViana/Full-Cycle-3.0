@@ -1,4 +1,5 @@
-import ProductFactory from "../../../domain/product/factory/product.factory";
+import Product from "../../../domain/product/entity/product";
+import { v4 as uuid } from "uuid";
 import ProductRepositoryInterface from "../../../domain/product/repository/product-repository";
 import { InputCreateProductDto, OutputCreateProductDto } from "./create.product.dto";
 
@@ -8,7 +9,9 @@ export default class CreateProductUseCase {
 
     async execute(input: InputCreateProductDto): Promise<OutputCreateProductDto> {
 
-        const product = await ProductFactory.create('a', input.name, input.price);
+        const product = new Product(uuid(), input.name, input.price)
+
+        await this.productRepository.create( product)
 
         return {
             id: product.id,
